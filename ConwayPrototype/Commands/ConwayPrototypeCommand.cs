@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConwayPrototype.Core.Extensions;
+using ConwayPrototype.Core.Geometry;
 using Rhino;
 using Rhino.Commands;
 using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
 
-namespace ConwayPrototype
+namespace ConwayPrototype.Commands
 {
     public class ConwayPrototypeCommand : Command
     {
@@ -32,6 +34,11 @@ namespace ConwayPrototype
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
+
+            var cube = new Cube(1);
+            doc.Objects.AddMesh(cube);
+
+            doc.Objects.AddMesh(cube.Dual());
 
             return Result.Success;
         }

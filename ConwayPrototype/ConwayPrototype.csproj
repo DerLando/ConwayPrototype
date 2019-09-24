@@ -53,8 +53,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConwayPrototypeCommand.cs" />
+    <Compile Include="Commands\ConwayPrototypeCommand.cs" />
     <Compile Include="ConwayPrototypePlugIn.cs" />
+    <Compile Include="Core\Extensions\DualOperation.cs" />
+    <Compile Include="Core\Extensions\General.cs" />
+    <Compile Include="Core\Geometry\Cube.cs" />
+    <Compile Include="Core\Geometry\Polyhedron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

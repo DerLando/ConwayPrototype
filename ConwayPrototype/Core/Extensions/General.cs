@@ -18,6 +18,5 @@ namespace ConwayPrototype.Core.Extensions
 
             return MeshFace.Unset;
         }
-        
     }
 }

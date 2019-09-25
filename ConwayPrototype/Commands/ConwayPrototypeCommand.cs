@@ -64,6 +64,24 @@ namespace ConwayPrototype.Commands
             truncate.Translate(new Vector3d(transFactor * 3, transFactor * 1, 0));
             doc.Objects.AddMesh(truncate);
 
+            var ortho = cube.Ortho();
+            ortho.Translate(new Vector3d(transFactor * 0, transFactor * 2, 0));
+            doc.Objects.AddMesh(ortho);
+
+            var expand = cube.Expand();
+            expand.Translate(new Vector3d(transFactor * 1, transFactor * 2, 0));
+            doc.Objects.AddMesh(expand);
+
+            var meta = cube.Meta();
+            meta.Translate(new Vector3d(transFactor * 2, transFactor * 2, 0));
+            doc.Objects.AddMesh(meta);
+
+            var bevel = cube.Bevel();
+            bevel.Translate(new Vector3d(transFactor * 3, transFactor * 2, 0));
+            doc.Objects.AddMesh(bevel);
+
+            doc.Views.Redraw();
+
             return Result.Success;
         }
     }

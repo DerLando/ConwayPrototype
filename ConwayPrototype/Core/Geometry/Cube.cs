@@ -9,13 +9,13 @@ namespace ConwayPrototype.Core.Geometry
     public class Cube : Polyhedron
     {
         private static readonly double[,] VertexPositionLookup =
-            {{-1, -1, -1}, {1, -1, -1}, {1, 1, -1}, {-1, 1, -1},
-                {-1, -1, 1}, {1, -1, 1}, {1, 1, 1}, {-1, 1, 1}};
+            {{-1, -1, -1}, {-1, 1, -1}, {1, 1, -1}, {1, -1, -1},
+                {-1, -1, 1}, {-1, 1, 1}, {1, 1, 1}, {1, -1, 1} };
 
         private static readonly int VertexCount = 8;
 
         public static readonly int[,] FaceIndexLookup =
-            {{0, 1, 2, 3}, {1, 5, 6, 2}, {5, 4, 7, 6}, {4, 0, 3, 7}, {0, 1, 5, 4}, {3, 2, 6, 7}};
+            {{0, 1, 2, 3}, {3, 2, 6, 7}, {7, 6, 5, 4}, {4, 5, 1, 0}, {0, 3, 7, 4}, {1, 5, 6, 2}};
 
         private static readonly int FaceCount = 6;
 

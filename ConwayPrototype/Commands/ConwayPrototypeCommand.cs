@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using ConwayPrototype.Core.Extensions;
+﻿using ConwayPrototype.Core.Extensions;
 using ConwayPrototype.Core.Geometry;
 using Rhino;
 using Rhino.Commands;
 using Rhino.Geometry;
-using Rhino.Input;
-using Rhino.Input.Custom;
 
 namespace ConwayPrototype.Commands
 {

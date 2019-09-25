@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Commands\ConwayPrototypeCommand.cs" />
     <Compile Include="ConwayPrototypePlugIn.cs" />
+    <Compile Include="Core\Extensions\AmboOperation.cs" />
     <Compile Include="Core\Extensions\DualOperation.cs" />
     <Compile Include="Core\Extensions\General.cs" />
     <Compile Include="Core\Extensions\KisOperation.cs" />

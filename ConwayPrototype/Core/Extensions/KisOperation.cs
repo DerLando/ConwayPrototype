@@ -19,6 +19,12 @@ namespace ConwayPrototype.Core.Extensions
             return mesh.ToPlanktonMesh().Kis(n).ToRhinoMesh();
         }
 
+        /// <summary>
+        /// compute kis of PlanktonMesh using the native Plankton function Faces.Stellate()
+        /// </summary>
+        /// <param name="pMesh"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static PlanktonMesh Kis(this PlanktonMesh pMesh, int n=0)
         {
             for (var i = pMesh.Faces.Count - 1; i >= 0; i--)

@@ -48,6 +48,10 @@ namespace ConwayPrototype.Commands
             kis.Transform(xTrans * xTrans);
             doc.Objects.AddMesh(kis);
 
+            var ambo = cube.Ambo();
+            ambo.Transform(xTrans * xTrans * xTrans);
+            doc.Objects.AddMesh(ambo);
+
             return Result.Success;
         }
     }

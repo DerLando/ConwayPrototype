@@ -9,7 +9,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Ambo(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Ambo().ToRhinoMeshWithNgons();
+            return mesh.ToPlanktonMeshWithNgons().Ambo().ToRhinoMeshWithNgons();
         }
 
         public static PlanktonMesh Ambo(this PlanktonMesh pMesh)

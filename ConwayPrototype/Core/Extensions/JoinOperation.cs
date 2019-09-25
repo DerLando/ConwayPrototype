@@ -8,7 +8,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Join(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Join().ToRhinoMeshWithNgons();
+            return mesh.ToPlanktonMeshWithNgons().Join().ToRhinoMeshWithNgons();
         }
 
         public static PlanktonMesh Join(this PlanktonMesh pMesh)

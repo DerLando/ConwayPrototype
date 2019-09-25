@@ -17,7 +17,7 @@ namespace ConwayPrototype.Core.Extensions
         /// <returns></returns>
         public static Mesh Dual(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Dual().ToRhinoMeshWithNgons();
+            return mesh.ToPlanktonMeshWithNgons().Dual().ToRhinoMeshWithNgons();
         }
 
         /// <summary>

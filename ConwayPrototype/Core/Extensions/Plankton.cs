@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Plankton;
 using PlanktonGh;
@@ -67,6 +68,30 @@ namespace ConwayPrototype.Core.Extensions
             }
             rMesh.Normals.ComputeNormals();
             return rMesh;
+        }
+
+        public static PlanktonMesh ToPlanktonMeshWithNgons(this Mesh rMesh)
+        {
+            var pMesh = new PlanktonMesh();
+            HashSet<int> topoVertexIndices = new HashSet<int>();
+
+            // clean up input mesh
+            rMesh.Vertices.CombineIdentical(true, true);
+            rMesh.Vertices.CullUnused();
+            rMesh.UnifyNormals();
+            rMesh.Weld(Math.PI);
+
+            foreach (var v in rMesh.TopologyVertices)
+            {
+                pMesh.Vertices.Add(v.X, v.Y, v.Z);
+            }
+
+            foreach (var meshNgon in rMesh.GetNgonAndFacesEnumerable())
+            {
+                pMesh.Faces.AddFace(from index in meshNgon.BoundaryVertexIndexList() select Convert.ToInt32(index));
+            }
+
+            return pMesh;
         }
     }
 }

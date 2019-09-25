@@ -8,7 +8,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Bevel(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Bevel().ToRhinoMeshWithNgons();
+            return mesh.ToPlanktonMeshWithNgons().Bevel().ToRhinoMeshWithNgons();
         }
 
         public static PlanktonMesh Bevel(this PlanktonMesh pMesh)

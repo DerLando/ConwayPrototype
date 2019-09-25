@@ -9,6 +9,10 @@ using Rhino.Geometry;
 
 namespace ConwayPrototype.Core.Extensions
 {
+    /// <summary>
+    /// DualOperation replaces all Faces with a Vertex at the face center
+    /// and all Vertices with a Face using the Vertex connectivity
+    /// </summary>
     public static class DualOperation
     {
         /// <summary>

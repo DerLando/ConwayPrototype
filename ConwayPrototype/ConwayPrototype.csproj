@@ -65,6 +65,7 @@
     <Compile Include="ConwayPrototypePlugIn.cs" />
     <Compile Include="Core\Extensions\DualOperation.cs" />
     <Compile Include="Core\Extensions\General.cs" />
+    <Compile Include="Core\Extensions\KisOperation.cs" />
     <Compile Include="Core\Extensions\Plankton.cs" />
     <Compile Include="Core\Geometry\Cube.cs" />
     <Compile Include="Core\Geometry\Polyhedron.cs" />

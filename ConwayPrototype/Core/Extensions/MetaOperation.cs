@@ -8,7 +8,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Meta(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Meta().ToRhinoMesh();
+            return mesh.ToPlanktonMesh().Meta().ToRhinoMeshWithNgons();
         }
 
         public static PlanktonMesh Meta(this PlanktonMesh pMesh)

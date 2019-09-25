@@ -34,6 +34,9 @@
 
             // Compact
             Compact();
+
+            // Scale by radius
+            Scale(radius);
         }
     }
 }

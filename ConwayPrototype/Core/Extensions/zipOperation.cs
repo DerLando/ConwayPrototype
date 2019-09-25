@@ -8,7 +8,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Zip(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Zip().ToRhinoMesh();
+            return mesh.ToPlanktonMesh().Zip().ToRhinoMeshWithNgons();
         }
 
         public static PlanktonMesh Zip(this PlanktonMesh pMesh)

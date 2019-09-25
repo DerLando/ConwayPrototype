@@ -8,7 +8,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Expand(this Mesh mesh)
         {
-            return mesh.ToPlanktonMesh().Expand().ToRhinoMesh();
+            return mesh.ToPlanktonMesh().Expand().ToRhinoMeshWithNgons();
         }
 
         public static PlanktonMesh Expand(this PlanktonMesh pMesh)

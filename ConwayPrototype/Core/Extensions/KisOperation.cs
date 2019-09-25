@@ -11,7 +11,7 @@ namespace ConwayPrototype.Core.Extensions
     {
         public static Mesh Kis(this Mesh mesh, int n=0)
         {
-            return mesh.ToPlanktonMesh().Kis(n).ToRhinoMesh();
+            return mesh.ToPlanktonMesh().Kis(n).ToRhinoMeshWithNgons();
         }
 
         /// <summary>

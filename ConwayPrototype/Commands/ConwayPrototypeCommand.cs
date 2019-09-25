@@ -31,22 +31,38 @@ namespace ConwayPrototype.Commands
         {
             RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
 
-            var xTrans = Transform.Translation(new Vector3d(3, 0, 0));
+            int transFactor = 3;
 
             var cube = new Cube(1);
             doc.Objects.AddMesh(cube);
 
             var dual = cube.Dual();
-            dual.Transform(xTrans);
+            dual.Translate(new Vector3d(transFactor, 0, 0));
             doc.Objects.AddMesh(dual);
 
             var kis = cube.Kis();
-            kis.Transform(xTrans * xTrans);
+            kis.Translate(new Vector3d(transFactor * 2, 0, 0));
             doc.Objects.AddMesh(kis);
 
             var ambo = cube.Ambo();
-            ambo.Transform(xTrans * xTrans * xTrans);
+            ambo.Translate(new Vector3d(transFactor * 3, 0, 0));
             doc.Objects.AddMesh(ambo);
+
+            var zip = cube.Zip();
+            zip.Translate(new Vector3d(transFactor * 0, transFactor * 1, 0));
+            doc.Objects.AddMesh(zip);
+
+            var join = cube.Join();
+            join.Translate(new Vector3d(transFactor * 1, transFactor * 1, 0));
+            doc.Objects.AddMesh(join);
+
+            var needle = cube.Needle();
+            needle.Translate(new Vector3d(transFactor * 2, transFactor * 1, 0));
+            doc.Objects.AddMesh(needle);
+
+            var truncate = cube.Truncate();
+            truncate.Translate(new Vector3d(transFactor * 3, transFactor * 1, 0));
+            doc.Objects.AddMesh(truncate);
 
             return Result.Success;
         }

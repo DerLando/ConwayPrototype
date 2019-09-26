@@ -42,8 +42,8 @@ namespace ConwayPrototype.Commands
             switch (index)
             {
                 case 1:
-                    RhinoApp.WriteLine($"{index} not implemented!");
-                    return Result.Failure;
+                    seed = new Octahedron();
+                    break;
                 case 2:
                     RhinoApp.WriteLine($"{index} not implemented!");
                     return Result.Failure;

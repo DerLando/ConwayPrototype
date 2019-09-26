@@ -79,6 +79,7 @@
     <Compile Include="Core\Extensions\TruncateOperation.cs" />
     <Compile Include="Core\Extensions\ZipOperation.cs" />
     <Compile Include="Core\Geometry\PlatonicSolids\Cube.cs" />
+    <Compile Include="Core\Geometry\PlatonicSolids\Octahedron.cs" />
     <Compile Include="Core\Geometry\PlatonicSolids\Tetrahedron.cs" />
     <Compile Include="Core\Geometry\Polyhedron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,6 @@
-﻿namespace ConwayPrototype.Core.Geometry
+﻿using Rhino.Geometry;
+
+namespace ConwayPrototype.Core.Geometry.PlatonicSolids
 {
     public class Cube : Polyhedron
     {
@@ -13,9 +15,12 @@
 
         private static readonly int FaceCount = 6;
 
-        public Cube(double radius)
-        {
+        public Cube() : base() { }
 
+        public Cube(Plane plane, double radius) : base(plane, radius) { }
+
+        internal override void InitializeMesh()
+        {
             // Add vertices from lookup
             for (int i = 0; i < VertexCount; i++)
             {
@@ -31,12 +36,6 @@
 
             // Compute normals
             Normals.ComputeNormals();
-
-            // Compact
-            Compact();
-
-            // Scale by radius
-            Scale(radius);
         }
     }
 }

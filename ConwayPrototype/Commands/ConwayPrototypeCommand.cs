@@ -1,8 +1,11 @@
-﻿using ConwayPrototype.Core.Extensions;
-using ConwayPrototype.Core.Geometry;
+﻿using System.Runtime.InteropServices;
+using ConwayPrototype.Core.Extensions;
+using ConwayPrototype.Core.Geometry.PlatonicSolids;
 using Rhino;
 using Rhino.Commands;
 using Rhino.Geometry;
+using Rhino.Input;
+using Rhino.Input.Custom;
 
 namespace ConwayPrototype.Commands
 {
@@ -29,54 +32,75 @@ namespace ConwayPrototype.Commands
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
-
             int transFactor = 3;
+            int index = 0;
+            Mesh seed = new Mesh();
 
-            var cube = new Cube(1);
-            doc.Objects.AddMesh(cube);
+            var rc = RhinoGet.GetInteger("Select seed value between 1 and 5", false, ref index, 1, 5);
+            if (rc != Result.Success) return rc;
 
-            var dual = cube.Dual();
+            switch (index)
+            {
+                case 1:
+                    RhinoApp.WriteLine($"{index} not implemented!");
+                    return Result.Failure;
+                case 2:
+                    RhinoApp.WriteLine($"{index} not implemented!");
+                    return Result.Failure;
+                case 3:
+                    seed = new Tetrahedron();
+                    break;
+                case 4:
+                    seed = new Cube();
+                    break;
+                case 5:
+                    RhinoApp.WriteLine($"{index} not implemented!");
+                    return Result.Failure;
+            }
+
+            doc.Objects.AddMesh(seed);
+
+            var dual = seed.Dual();
             dual.Translate(new Vector3d(transFactor, 0, 0));
             doc.Objects.AddMesh(dual);
 
-            var kis = cube.Kis();
+            var kis = seed.Kis();
             kis.Translate(new Vector3d(transFactor * 2, 0, 0));
             doc.Objects.AddMesh(kis);
 
-            var ambo = cube.Ambo();
+            var ambo = seed.Ambo();
             ambo.Translate(new Vector3d(transFactor * 3, 0, 0));
             doc.Objects.AddMesh(ambo);
 
-            var zip = cube.Zip();
+            var zip = seed.Zip();
             zip.Translate(new Vector3d(transFactor * 0, transFactor * 1, 0));
             doc.Objects.AddMesh(zip);
 
-            var join = cube.Join();
+            var join = seed.Join();
             join.Translate(new Vector3d(transFactor * 1, transFactor * 1, 0));
             doc.Objects.AddMesh(join);
 
-            var needle = cube.Needle();
+            var needle = seed.Needle();
             needle.Translate(new Vector3d(transFactor * 2, transFactor * 1, 0));
             doc.Objects.AddMesh(needle);
 
-            var truncate = cube.Truncate();
+            var truncate = seed.Truncate();
             truncate.Translate(new Vector3d(transFactor * 3, transFactor * 1, 0));
             doc.Objects.AddMesh(truncate);
 
-            var ortho = cube.Ortho();
+            var ortho = seed.Ortho();
             ortho.Translate(new Vector3d(transFactor * 0, transFactor * 2, 0));
             doc.Objects.AddMesh(ortho);
 
-            var expand = cube.Expand();
+            var expand = seed.Expand();
             expand.Translate(new Vector3d(transFactor * 1, transFactor * 2, 0));
             doc.Objects.AddMesh(expand);
 
-            var meta = cube.Meta();
+            var meta = seed.Meta();
             meta.Translate(new Vector3d(transFactor * 2, transFactor * 2, 0));
             doc.Objects.AddMesh(meta);
 
-            var bevel = cube.Bevel();
+            var bevel = seed.Bevel();
             bevel.Translate(new Vector3d(transFactor * 3, transFactor * 2, 0));
             doc.Objects.AddMesh(bevel);
 

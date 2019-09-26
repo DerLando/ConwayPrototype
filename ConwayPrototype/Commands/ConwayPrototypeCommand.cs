@@ -45,8 +45,8 @@ namespace ConwayPrototype.Commands
                     seed = new Octahedron();
                     break;
                 case 2:
-                    RhinoApp.WriteLine($"{index} not implemented!");
-                    return Result.Failure;
+                    seed = new Icosahedron();
+                    break;
                 case 3:
                     seed = new Tetrahedron();
                     break;

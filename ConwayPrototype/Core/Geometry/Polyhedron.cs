@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using System;
+using Rhino.Geometry;
 
 namespace ConwayPrototype.Core.Geometry
 {
@@ -12,6 +13,8 @@ namespace ConwayPrototype.Core.Geometry
 
         // plane of polyhedron on creation
         public Plane Plane { get; set; } = Plane.WorldXY;
+
+        internal static double Phi = 0.61803398874989484820458683436;
 
         protected Polyhedron()
         {

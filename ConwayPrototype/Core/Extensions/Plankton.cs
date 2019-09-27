@@ -93,5 +93,15 @@ namespace ConwayPrototype.Core.Extensions
 
             return pMesh;
         }
+
+        public static Point3d ToPoint3d(this PlanktonXYZ pPt)
+        {
+            return new Point3d(pPt.X, pPt.Y, pPt.Z);
+        }
+
+        public static Point3d ToPoint3d(this PlanktonVertex pV)
+        {
+            return new Point3d(pV.ToPoint3f());
+        }
     }
 }

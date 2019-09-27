@@ -34,11 +34,11 @@
   <ItemGroup>
     <Reference Include="Plankton, Version=0.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Plankton.dll</HintPath>
+      <HintPath>Dependencies\Plankton.dll</HintPath>
     </Reference>
     <Reference Include="PlanktonGH, Version=0.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\PlanktonGH.dll</HintPath>
+      <HintPath>Dependencies\PlanktonGH.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -72,6 +72,7 @@
     <Compile Include="Core\Extensions\General.cs" />
     <Compile Include="Core\Extensions\JoinOperation.cs" />
     <Compile Include="Core\Extensions\KisOperation.cs" />
+    <Compile Include="Core\Extensions\LoftOperation.cs" />
     <Compile Include="Core\Extensions\MetaOperation.cs" />
     <Compile Include="Core\Extensions\NeedleOperation.cs" />
     <Compile Include="Core\Extensions\OrthoOperation.cs" />

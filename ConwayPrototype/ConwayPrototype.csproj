@@ -85,11 +85,18 @@
     <Compile Include="Core\Geometry\PlatonicSolids\Octahedron.cs" />
     <Compile Include="Core\Geometry\PlatonicSolids\Tetrahedron.cs" />
     <Compile Include="Core\Geometry\Polyhedron.cs" />
+    <Compile Include="Core\Parsing\Operation.cs" />
+    <Compile Include="Core\Parsing\Operator.cs" />
+    <Compile Include="Core\Parsing\Token.cs" />
+    <Compile Include="Core\Parsing\Tokenizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Conduits\DrawPreviewMeshConduit.cs" />
+    <Compile Include="UI\Views\OperateOnMeshDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

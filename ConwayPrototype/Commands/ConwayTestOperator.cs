@@ -1,9 +1,14 @@
 ﻿using System;
 using ConwayPrototype.Core.Extensions;
+using ConwayPrototype.UI.Conduits;
+using ConwayPrototype.UI.Views;
+using Eto.Forms;
 using Rhino;
 using Rhino.Commands;
 using Rhino.DocObjects;
 using Rhino.Input;
+using Rhino.UI;
+using Command = Rhino.Commands.Command;
 
 namespace ConwayPrototype.Commands
 {
@@ -34,13 +39,40 @@ namespace ConwayPrototype.Commands
 
             var mesh = objRef.Mesh();
 
-            var converted = mesh.Loft();
+            // extract attributes from picked mesh
+            var attributes = objRef.Object().Attributes;
 
-            doc.Objects.AddMesh(converted);
+            // delete picked mesh
+            doc.Objects.Delete(objRef, true);
 
+            // redraw
             doc.Views.Redraw();
 
-            return Result.Success;
+            // Test for runmode and start dialog
+            OperateOnMeshDialog dialog = null;
+            if (mode == RunMode.Interactive)
+            {
+                dialog = new OperateOnMeshDialog(mesh);
+                dialog.RestorePosition();
+                var dialog_rc = dialog.ShowSemiModal(doc, RhinoEtoApp.MainWindow);
+                dialog.SavePosition();
+                if (dialog_rc == DialogResult.Ok)
+                {
+                    rc = Result.Success;
+                }
+            }
+
+            else
+            {
+                RhinoApp.WriteLine($"Scriptable version of {EnglishName} not implemented.");
+                doc.Objects.AddMesh(mesh, attributes);
+                return rc;
+            }
+
+            doc.Objects.AddMesh(dialog.OperationResult, attributes);
+            doc.Views.Redraw();
+
+            return rc;
         }
     }
 }

@@ -25,12 +25,11 @@ namespace ConwayPrototype.UI.Views
         public Mesh OperationResult { get; private set; }
 
         // controls
-        private ImageView imV_Preview = new ImageView();
         private Button btn_OK =  new Button{Text = "OK"};
         private Button btn_Preview = new Button{Text = "Preview"};
         private TextBox tB_OperationInput = new TextBox();
         private Label lbl_OperationInput = new Label{Text = "Command", VerticalAlignment = VerticalAlignment.Center};
-        private ViewportControl vpC_Preview = new ViewportControl{Size = new Size(400, 200)};
+        private Label lbl_AvailableOperators = new Label{Text = $"Currently Available Operators:\n {Tokenizer.PossibleTokens}"};
 
         public OperateOnMeshDialog(Mesh mesh)
         {
@@ -57,8 +56,9 @@ namespace ConwayPrototype.UI.Views
             // initialize layout
             var layout = new DynamicLayout();
 
-            layout.AddRow(new Control[] {lbl_OperationInput, tB_OperationInput});
-            layout.AddRow(btn_Preview, btn_OK);
+            layout.Add(lbl_AvailableOperators);
+            layout.AddSeparateRow(new Control[] {lbl_OperationInput, tB_OperationInput});
+            layout.Add(btn_OK);
 
             Content = layout;
         }

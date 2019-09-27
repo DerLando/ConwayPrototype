@@ -40,7 +40,6 @@ namespace ConwayPrototype.UI.Conduits
         {
             base.CalculateBoundingBox(e);
             e.IncludeBoundingBox(_bbox);
-            //e.BoundingBox.Union(_bbox);
         }
 
         protected override void PreDrawObject(DrawObjectEventArgs e)

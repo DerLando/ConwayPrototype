@@ -9,7 +9,7 @@ namespace ConwayPrototype.Core.Parsing
 {
     public static class Tokenizer
     {
-        private static string PossibleTokens = "kadbejlmnotz";
+        public static string PossibleTokens = "kadbejlmnotz";
 
         private static bool IsToken(char c)
         {

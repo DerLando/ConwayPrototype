@@ -103,5 +103,10 @@ namespace ConwayPrototype.Core.Extensions
         {
             return new Point3d(pV.ToPoint3f());
         }
+
+        public static int Add(this PlanktonVertexList vList, Point3d pt)
+        {
+            return vList.Add(pt.X, pt.Y, pt.Z);
+        }
     }
 }

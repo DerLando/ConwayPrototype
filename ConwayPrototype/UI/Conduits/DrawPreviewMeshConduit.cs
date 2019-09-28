@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConwayPrototype.Core.Extensions;
 using Rhino.Display;
 using Rhino.Geometry;
 
@@ -17,14 +18,16 @@ namespace ConwayPrototype.UI.Conduits
         private readonly Color _color;
         private readonly DisplayMaterial _material;
         private readonly BoundingBox _bbox;
+        private bool _shouldDrawVertexColors;
 
         public DrawPreviewMeshConduit(Mesh mesh, Mesh wireFrameMesh)
         {
-            _mesh = mesh;
+            _mesh = mesh.ColorPolyhedron();
             _wireFrameMesh = wireFrameMesh;
             _wireFrameColor = Color.LightYellow;
             _color = Color.Red;
             _material = new DisplayMaterial(_color);
+            _shouldDrawVertexColors = false;
             if (_mesh != null && _mesh.IsValid)
             {
                 _bbox = _mesh.GetBoundingBox(true);
@@ -33,12 +36,17 @@ namespace ConwayPrototype.UI.Conduits
 
         public void SetDisplayMesh(Mesh mesh)
         {
-            _mesh = mesh;
+            _mesh = mesh.ColorPolyhedron();
         }
 
         public void SetWireframeMesh(Mesh mesh)
         {
             _wireFrameMesh = mesh;
+        }
+
+        public void SetDrawMode(bool value)
+        {
+            _shouldDrawVertexColors = value;
         }
 
         protected override void CalculateBoundingBox(CalculateBoundingBoxEventArgs e)
@@ -60,7 +68,9 @@ namespace ConwayPrototype.UI.Conduits
             }
             else
             {
-                e.Display.DrawMeshShaded(_mesh, _material);
+                if(_shouldDrawVertexColors) e.Display.DrawMeshFalseColors(_mesh);
+                else e.Display.DrawMeshShaded(_mesh, _material);
+
                 e.Display.DrawMeshWires(_mesh, _wireFrameColor);
             }
 

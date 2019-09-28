@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConwayPrototype.Core.Extensions;
 using ConwayPrototype.Core.Geometry;
 using ConwayPrototype.Core.Parsing;
 using ConwayPrototype.UI.Conduits;
@@ -24,11 +25,15 @@ namespace ConwayPrototype.UI.Views
 
         // controls
         private Button btn_OK = new Button { Text = "OK" };
+        private Button btn_Zoom = new Button {Text = "Zoom"};
         private TextBox tB_OperationInput = new TextBox();
         private Label lbl_OperationInput = new Label { Text = "Command", VerticalAlignment = VerticalAlignment.Center };
         private Label lbl_AvailableOperators = new Label { Text = $"Currently Available Operators:\n {Tokenizer.PossibleTokens}" };
         private Label lbl_Seeds = new Label{Text = "Available Seeds", VerticalAlignment = VerticalAlignment.Center};
-        private ListBox lB_Seeds = new ListBox();
+        private ComboBox cB_Seeds = new ComboBox{DataStore = Enum.GetNames(typeof(Seed)) };
+        private CheckBox cB_DrawVertexColors = new CheckBox{Checked = false};
+        private Label lbl_DrawVertexColors = new Label
+            {Text = "Topology View", VerticalAlignment = VerticalAlignment.Center};
 
         public CreateFromSeedDialog()
         {
@@ -49,26 +54,41 @@ namespace ConwayPrototype.UI.Views
 
             // initialize event handlers
             btn_OK.Click += ON_btn_OK_Clicked;
+            btn_Zoom.Click += btn_Zoom_Clicked;
             tB_OperationInput.TextChanged += tB_OperationInput_TextChanged;
-            lB_Seeds.DataStore = Enum.GetNames(typeof(Seed));
-            lB_Seeds.SelectedIndexChanged += lB_Seeds_SelectedIndexChanged;
-            lB_Seeds.SelectedIndex = 1;
+            cB_Seeds.SelectedIndexChanged += cB_Seeds_SelectedIndexChanged;
+            cB_Seeds.SelectedIndex = 1;
+            cB_DrawVertexColors.CheckedChanged += cB_DrawVertexColors_CheckedChanged;
 
             // initialize layout
             var layout = new DynamicLayout();
 
             layout.AddSeparateRow(lbl_AvailableOperators);
-            layout.AddRow(new Control[] {lbl_Seeds, lB_Seeds});
-            layout.AddRow(new Control[] { lbl_OperationInput, tB_OperationInput });
-            layout.Add(btn_OK);
+            layout.AddRow(new Control[] {lbl_Seeds, cB_Seeds});
+            layout.AddRow(new Control[] {lbl_DrawVertexColors, cB_DrawVertexColors});
+            layout.AddRow(new Control[] {lbl_OperationInput, tB_OperationInput});
+            layout.AddRow(new Control[] {btn_Zoom, btn_OK});
 
             Content = layout;
         }
 
-        private void lB_Seeds_SelectedIndexChanged(object sender, EventArgs e)
+        private void cB_DrawVertexColors_CheckedChanged(object sender, EventArgs e)
+        {
+            bool value = cB_DrawVertexColors.Checked.Value;
+            _conduit.SetDrawMode(value);
+
+            RhinoDoc.ActiveDoc.Views.Redraw();
+        }
+
+        private void btn_Zoom_Clicked(object sender, EventArgs e)
+        {
+            RhinoDoc.ActiveDoc.Views.ActiveView.ActiveViewport.ZoomBoundingBox(_mesh.GetBoundingBox(true));
+        }
+
+        private void cB_Seeds_SelectedIndexChanged(object sender, EventArgs e)
         {
             // change internal seed mesh
-            _mesh = Creator.Create((Seed) Enum.Parse(typeof(Seed), (string) lB_Seeds.SelectedValue));
+            _mesh = Creator.Create((Seed) Enum.Parse(typeof(Seed), (string) cB_Seeds.SelectedValue));
 
             // update wireframe mesh of conduit
             _conduit.SetWireframeMesh(_mesh);
@@ -90,7 +110,7 @@ namespace ConwayPrototype.UI.Views
 
         private void ON_btn_OK_Clicked(object sender, EventArgs e)
         {
-            OperationResult = _operator.GetMesh();
+            OperationResult = _operator.GetMesh().ColorPolyhedron();
             Close(DialogResult.Ok);
         }
 

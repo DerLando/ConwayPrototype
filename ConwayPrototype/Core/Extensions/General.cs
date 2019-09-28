@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Rhino;
 using Rhino.Geometry;
@@ -23,6 +24,20 @@ namespace ConwayPrototype.Core.Extensions
             return new Polyline(from index in nGon.BoundaryVertexIndexList() select new Point3d(mesh.Vertices[Convert.ToInt32(index)])).Length;
         }
 
+        public static IEnumerable<Color> ColorRange(int count)
+        {
+            // super basic for now
+            int stepSize = (int)Math.Floor(255.0 / count);
+
+            Color[] colors = new Color[count];
+            for (int i = 0; i < count; i++)
+            {
+                colors[i] = Color.FromArgb(0, i * stepSize, i * stepSize, i * stepSize);
+            }
+
+            return colors;
+        }
+
         public static Mesh ColorPolyhedron(this Mesh mesh)
         {
             // unweld all faces
@@ -42,7 +57,7 @@ namespace ConwayPrototype.Core.Extensions
 
                 var poly = new Polyline(vertices);
 
-                var length = Math.Round(poly.Length, (int) (1 / tol));
+                var length = Math.Round(poly.Length, (1 / tol).ToString().Length);
 
                 if (lengthIndicesDict.ContainsKey(length))
                 {
@@ -53,6 +68,38 @@ namespace ConwayPrototype.Core.Extensions
                     lengthIndicesDict[length] = new List<int[]>{indices};
                 }
             }
+
+            // create color range
+            var colorRange = ColorRange(lengthIndicesDict.Count).ToArray();
+
+            // empty array to hold all vertex colors
+            var vertexColors = new Color[mesh.Vertices.Count];
+
+            // extracted keys for easier reference by index
+            var keys = lengthIndicesDict.Keys.ToArray();
+
+            // iterate over all keys
+            for (int i = 0; i < lengthIndicesDict.Count; i++)
+            {
+                // current color by index of key
+                var curColor = colorRange[i];
+
+                // iterate over face-vertex lists in key
+                foreach (var vIndexList in lengthIndicesDict[keys[i]])
+                {
+                    foreach (var index in vIndexList)
+                    {
+                        // set vertex color by index stored in face-vertex list
+                        vertexColors[index] = curColor;
+                    }
+                }
+            }
+
+            // set all colors at once
+            mesh.VertexColors.SetColors(vertexColors);
+
+            // return
+            return mesh;
         }
     }
 }

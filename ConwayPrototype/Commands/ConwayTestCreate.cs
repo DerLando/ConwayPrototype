@@ -3,6 +3,7 @@ using ConwayPrototype.UI.Views;
 using Eto.Forms;
 using Rhino;
 using Rhino.Commands;
+using Rhino.DocObjects;
 using Rhino.UI;
 using Command = Rhino.Commands.Command;
 
@@ -51,7 +52,12 @@ namespace ConwayPrototype.Commands
                 return rc;
             }
 
-            doc.Objects.AddMesh(dialog.OperationResult);
+            var attributes = new ObjectAttributes
+            {
+                Name = dialog.ResultName
+            };
+
+            doc.Objects.AddMesh(dialog.OperationResult, attributes);
             doc.Views.Redraw();
 
             return rc;

@@ -22,6 +22,7 @@ namespace ConwayPrototype.UI.Views
         private Operator _operator;
         private DrawPreviewMeshConduit _conduit;
         public Mesh OperationResult { get; private set; }
+        public string ResultName { get; private set; }
 
         // controls
         private Button btn_OK = new Button { Text = "OK" };
@@ -111,6 +112,8 @@ namespace ConwayPrototype.UI.Views
         private void ON_btn_OK_Clicked(object sender, EventArgs e)
         {
             OperationResult = _operator.GetMesh().ColorPolyhedron();
+            ResultName =
+                $"{Tokenizer.Tokenize(tB_OperationInput.Text).ToName()}{Tokenizer.NameDelimiter}{cB_Seeds.SelectedValue.ToString()}";
             Close(DialogResult.Ok);
         }
 

@@ -10,6 +10,7 @@ namespace ConwayPrototype.Core.Parsing
     public static class Tokenizer
     {
         public static string PossibleTokens = "kadbejlmnotz";
+        public static string NameDelimiter = "-";
 
         private static bool IsToken(char c)
         {
@@ -80,6 +81,20 @@ namespace ConwayPrototype.Core.Parsing
             }
 
             return token;
+        }
+
+        public static string ToName(this IEnumerable<Token> token)
+        {
+            string name = "";
+            foreach (var tok in token)
+            {
+                name += tok.Operation.ToString();
+                name += NameDelimiter;
+            }
+
+            name = name.Remove(name.Length - 1);
+
+            return name;
         }
     }
 }

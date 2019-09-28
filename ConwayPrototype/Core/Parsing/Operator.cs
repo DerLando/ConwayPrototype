@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConwayPrototype.Core.Extensions;
+using ConwayPrototype.Core.Geometry;
 using Plankton;
 using Rhino.Geometry;
 

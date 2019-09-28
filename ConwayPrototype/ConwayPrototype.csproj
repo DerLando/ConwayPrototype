@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ConwayPrototypeCommand.cs" />
+    <Compile Include="Commands\ConwayTestCreate.cs" />
     <Compile Include="Commands\ConwayTestOperator.cs" />
     <Compile Include="Commands\ConwayTestSeed.cs" />
     <Compile Include="Commands\ConwayTestToPlanktonMesh.cs" />
@@ -84,13 +85,18 @@
     <Compile Include="Core\Geometry\PlatonicSolids\Icosahedron.cs" />
     <Compile Include="Core\Geometry\PlatonicSolids\Octahedron.cs" />
     <Compile Include="Core\Geometry\PlatonicSolids\Tetrahedron.cs" />
-    <Compile Include="Core\Geometry\Polyhedron.cs" />
+    <Compile Include="Core\Geometry\PlatonicSolids\PolyhedronBase.cs" />
+    <Compile Include="Core\Geometry\RegularTilings\Square.cs" />
+    <Compile Include="Core\Geometry\RegularTilings\TilingBase.cs" />
+    <Compile Include="Core\Geometry\Seed.cs" />
+    <Compile Include="Core\Parsing\Creator.cs" />
     <Compile Include="Core\Parsing\Operation.cs" />
     <Compile Include="Core\Parsing\Operator.cs" />
     <Compile Include="Core\Parsing\Token.cs" />
     <Compile Include="Core\Parsing\Tokenizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Conduits\DrawPreviewMeshConduit.cs" />
+    <Compile Include="UI\Views\CreateFromSeedDialog.cs" />
     <Compile Include="UI\Views\OperateOnMeshDialog.cs" />
   </ItemGroup>
   <ItemGroup>

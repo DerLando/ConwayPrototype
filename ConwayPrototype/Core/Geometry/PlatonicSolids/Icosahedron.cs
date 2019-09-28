@@ -7,7 +7,7 @@ using Rhino.Geometry;
 
 namespace ConwayPrototype.Core.Geometry.PlatonicSolids
 {
-    public class Icosahedron : Polyhedron
+    public class Icosahedron : PolyhedronBase
     {
         private static readonly double[,] VertexPositionLookup =
         {

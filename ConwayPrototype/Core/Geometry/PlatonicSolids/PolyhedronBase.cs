@@ -1,12 +1,12 @@
 ﻿using System;
 using Rhino.Geometry;
 
-namespace ConwayPrototype.Core.Geometry
+namespace ConwayPrototype.Core.Geometry.PlatonicSolids
 {
     /// <summary>
     /// abstract base class for platonic solids
     /// </summary>
-    public abstract class Polyhedron : Mesh
+    public abstract class PolyhedronBase : Mesh
     {
         // radius of polyhedron on creation
         public double Radius { get; set; } = 1;
@@ -16,12 +16,12 @@ namespace ConwayPrototype.Core.Geometry
 
         internal static double Phi = 0.61803398874989484820458683436;
 
-        protected Polyhedron()
+        protected PolyhedronBase()
         {
             InitializeMesh();
         }
 
-        protected Polyhedron(Plane plane, double radius)
+        protected PolyhedronBase(Plane plane, double radius)
         {
             Plane = plane;
             Radius = radius;

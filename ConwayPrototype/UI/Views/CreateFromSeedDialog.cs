@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ConwayPrototype.Core.Geometry;
 using ConwayPrototype.Core.Parsing;
 using ConwayPrototype.UI.Conduits;
 using Eto.Drawing;
@@ -9,9 +14,8 @@ using Rhino.Geometry;
 
 namespace ConwayPrototype.UI.Views
 {
-    public class OperateOnMeshDialog : Dialog<DialogResult>
+    public class CreateFromSeedDialog : Dialog<DialogResult>
     {
-
         // mesh
         private Mesh _mesh;
         private Operator _operator;
@@ -19,16 +23,18 @@ namespace ConwayPrototype.UI.Views
         public Mesh OperationResult { get; private set; }
 
         // controls
-        private Button btn_OK =  new Button{Text = "OK"};
+        private Button btn_OK = new Button { Text = "OK" };
         private TextBox tB_OperationInput = new TextBox();
-        private Label lbl_OperationInput = new Label{Text = "Command", VerticalAlignment = VerticalAlignment.Center};
-        private Label lbl_AvailableOperators = new Label{Text = $"Currently Available Operators:\n {Tokenizer.PossibleTokens}"};
+        private Label lbl_OperationInput = new Label { Text = "Command", VerticalAlignment = VerticalAlignment.Center };
+        private Label lbl_AvailableOperators = new Label { Text = $"Currently Available Operators:\n {Tokenizer.PossibleTokens}" };
+        private Label lbl_Seeds = new Label{Text = "Available Seeds", VerticalAlignment = VerticalAlignment.Center};
+        private ListBox lB_Seeds = new ListBox();
 
-        public OperateOnMeshDialog(Mesh mesh)
+        public CreateFromSeedDialog()
         {
             // initialize fields
-            _mesh = mesh;
-            _operator = new Operator(mesh);
+            _mesh = new Mesh();
+            _operator = new Operator(_mesh);
             _conduit = new DrawPreviewMeshConduit(_operator.GetMesh(), _mesh);
             _conduit.Enabled = true;
 
@@ -44,15 +50,31 @@ namespace ConwayPrototype.UI.Views
             // initialize event handlers
             btn_OK.Click += ON_btn_OK_Clicked;
             tB_OperationInput.TextChanged += tB_OperationInput_TextChanged;
+            lB_Seeds.DataStore = Enum.GetNames(typeof(Seed));
+            lB_Seeds.SelectedIndexChanged += lB_Seeds_SelectedIndexChanged;
+            lB_Seeds.SelectedIndex = 1;
 
             // initialize layout
             var layout = new DynamicLayout();
 
-            layout.Add(lbl_AvailableOperators);
-            layout.AddSeparateRow(new Control[] {lbl_OperationInput, tB_OperationInput});
+            layout.AddSeparateRow(lbl_AvailableOperators);
+            layout.AddRow(new Control[] {lbl_Seeds, lB_Seeds});
+            layout.AddRow(new Control[] { lbl_OperationInput, tB_OperationInput });
             layout.Add(btn_OK);
 
             Content = layout;
+        }
+
+        private void lB_Seeds_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // change internal seed mesh
+            _mesh = Creator.Create((Seed) Enum.Parse(typeof(Seed), (string) lB_Seeds.SelectedValue));
+
+            // update wireframe mesh of conduit
+            _conduit.SetWireframeMesh(_mesh);
+
+            // raise textChanged event to re-run operations
+            tB_OperationInput_TextChanged(sender, e);
         }
 
         private void tB_OperationInput_TextChanged(object sender, EventArgs e)
@@ -77,9 +99,10 @@ namespace ConwayPrototype.UI.Views
             _conduit.Enabled = false;
 
             // save initial mesh if nothing has been done
-            if(OperationResult is null) OperationResult = _mesh;
+            if (OperationResult is null) OperationResult = _mesh;
 
             base.OnClosing(e);
         }
+
     }
 }

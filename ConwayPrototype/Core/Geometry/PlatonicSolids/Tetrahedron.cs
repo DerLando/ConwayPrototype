@@ -2,7 +2,7 @@
 
 namespace ConwayPrototype.Core.Geometry.PlatonicSolids
 {
-    public class Tetrahedron : Polyhedron
+    public class Tetrahedron : PolyhedronBase
     {
         private static readonly double[,] VertexPositionLookup =
             {{1, 1, 1}, {1, -1, -1}, {-1, 1, -1}, {-1, -1, 1}};

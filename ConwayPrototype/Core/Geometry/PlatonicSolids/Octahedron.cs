@@ -7,7 +7,7 @@ using Rhino.Geometry;
 
 namespace ConwayPrototype.Core.Geometry.PlatonicSolids
 {
-    public class Octahedron : Polyhedron
+    public class Octahedron : PolyhedronBase
     {
         private static readonly double[,] VertexPositionLookup =
         {

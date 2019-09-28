@@ -36,6 +36,11 @@ namespace ConwayPrototype.UI.Conduits
             _mesh = mesh;
         }
 
+        public void SetWireframeMesh(Mesh mesh)
+        {
+            _wireFrameMesh = mesh;
+        }
+
         protected override void CalculateBoundingBox(CalculateBoundingBoxEventArgs e)
         {
             base.CalculateBoundingBox(e);
@@ -58,6 +63,7 @@ namespace ConwayPrototype.UI.Conduits
                 e.Display.DrawMeshShaded(_mesh, _material);
                 e.Display.DrawMeshWires(_mesh, _wireFrameColor);
             }
+
         }
     }
 }

@@ -40,6 +40,14 @@ namespace ConwayPrototype.Core.Extensions
 
         public static Mesh ColorPolyhedron(this Mesh mesh)
         {
+            //TODO: There seems to be no way to keep nGon Information while coloring a mesh.
+
+            // get ngon face indices to reconstruct from later
+            var ngonIndices = from ngon in mesh.Ngons
+                select (from index in ngon.FaceIndexList() select Convert.ToInt32(index));
+
+            int nGonCount = mesh.Ngons.Count;
+
             // unweld all faces
             mesh.Unweld(0, true);
 
@@ -97,6 +105,27 @@ namespace ConwayPrototype.Core.Extensions
 
             // set all colors at once
             mesh.VertexColors.SetColors(vertexColors);
+
+            // re-set nGons
+            List<MeshNgon> nGons = new List<MeshNgon>();
+            foreach (var ngonIndex in ngonIndices)
+            {
+                int[] faceIndices = ngonIndex.ToArray();
+                int[] vertexIndices = new int[faceIndices.Length * 4];
+
+                for (int i = 0; i < faceIndices.Length; i++)
+                {
+                    vertexIndices[i * 4 + 0] = mesh.Faces[faceIndices[i]].A;
+                    vertexIndices[i * 4 + 1] = mesh.Faces[faceIndices[i]].B;
+                    vertexIndices[i * 4 + 2] = mesh.Faces[faceIndices[i]].C;
+                    vertexIndices[i * 4 + 3] = mesh.Faces[faceIndices[i]].D;
+
+                }
+
+                nGons.Add(MeshNgon.Create(vertexIndices, faceIndices));
+            }
+
+            mesh.Ngons.AddNgons(nGons);
 
             // return
             return mesh;

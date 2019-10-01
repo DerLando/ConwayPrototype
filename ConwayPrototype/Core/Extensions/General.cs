@@ -107,25 +107,28 @@ namespace ConwayPrototype.Core.Extensions
             mesh.VertexColors.SetColors(vertexColors);
 
             // re-set nGons
-            List<MeshNgon> nGons = new List<MeshNgon>();
-            foreach (var ngonIndex in ngonIndices)
+            if (false)
             {
-                int[] faceIndices = ngonIndex.ToArray();
-                int[] vertexIndices = new int[faceIndices.Length * 4];
-
-                for (int i = 0; i < faceIndices.Length; i++)
+                List<MeshNgon> nGons = new List<MeshNgon>();
+                foreach (var ngonIndex in ngonIndices)
                 {
-                    vertexIndices[i * 4 + 0] = mesh.Faces[faceIndices[i]].A;
-                    vertexIndices[i * 4 + 1] = mesh.Faces[faceIndices[i]].B;
-                    vertexIndices[i * 4 + 2] = mesh.Faces[faceIndices[i]].C;
-                    vertexIndices[i * 4 + 3] = mesh.Faces[faceIndices[i]].D;
+                    int[] faceIndices = ngonIndex.ToArray();
+                    int[] vertexIndices = new int[faceIndices.Length * 4];
 
+                    for (int i = 0; i < faceIndices.Length; i++)
+                    {
+                        vertexIndices[i * 4 + 0] = mesh.Faces[faceIndices[i]].A;
+                        vertexIndices[i * 4 + 1] = mesh.Faces[faceIndices[i]].B;
+                        vertexIndices[i * 4 + 2] = mesh.Faces[faceIndices[i]].C;
+                        vertexIndices[i * 4 + 3] = mesh.Faces[faceIndices[i]].D;
+
+                    }
+
+                    nGons.Add(MeshNgon.Create(vertexIndices, faceIndices));
                 }
 
-                nGons.Add(MeshNgon.Create(vertexIndices, faceIndices));
+                mesh.Ngons.AddNgons(nGons);
             }
-
-            mesh.Ngons.AddNgons(nGons);
 
             // return
             return mesh;

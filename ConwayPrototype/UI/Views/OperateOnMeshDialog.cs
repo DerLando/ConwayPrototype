@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using ConwayPrototype.Core.Extensions;
 using ConwayPrototype.Core.Parsing;
 using ConwayPrototype.UI.Conduits;
 using Eto.Drawing;
@@ -20,9 +21,13 @@ namespace ConwayPrototype.UI.Views
 
         // controls
         private Button btn_OK =  new Button{Text = "OK"};
+        private Button btn_Zoom = new Button { Text = "Zoom" };
         private TextBox tB_OperationInput = new TextBox();
         private Label lbl_OperationInput = new Label{Text = "Command", VerticalAlignment = VerticalAlignment.Center};
         private Label lbl_AvailableOperators = new Label{Text = $"Currently Available Operators:\n {Tokenizer.PossibleTokens}"};
+        private CheckBox cB_DrawVertexColors = new CheckBox { Checked = false };
+        private Label lbl_DrawVertexColors = new Label
+            { Text = "Topology View", VerticalAlignment = VerticalAlignment.Center };
 
         public OperateOnMeshDialog(Mesh mesh)
         {
@@ -43,16 +48,32 @@ namespace ConwayPrototype.UI.Views
 
             // initialize event handlers
             btn_OK.Click += ON_btn_OK_Clicked;
+            btn_Zoom.Click += btn_Zoom_Clicked;
             tB_OperationInput.TextChanged += tB_OperationInput_TextChanged;
+            cB_DrawVertexColors.CheckedChanged += cB_DrawVertexColors_CheckedChanged;
 
             // initialize layout
             var layout = new DynamicLayout();
 
-            layout.Add(lbl_AvailableOperators);
-            layout.AddSeparateRow(new Control[] {lbl_OperationInput, tB_OperationInput});
-            layout.Add(btn_OK);
+            layout.AddSeparateRow(lbl_AvailableOperators);
+            layout.AddRow(new Control[] { lbl_DrawVertexColors, cB_DrawVertexColors });
+            layout.AddRow(new Control[] { lbl_OperationInput, tB_OperationInput });
+            layout.AddRow(new Control[] { btn_Zoom, btn_OK });
 
             Content = layout;
+        }
+
+        private void cB_DrawVertexColors_CheckedChanged(object sender, EventArgs e)
+        {
+            bool value = cB_DrawVertexColors.Checked.Value;
+            _conduit.SetDrawMode(value);
+
+            RhinoDoc.ActiveDoc.Views.Redraw();
+        }
+
+        private void btn_Zoom_Clicked(object sender, EventArgs e)
+        {
+            RhinoDoc.ActiveDoc.Views.ActiveView.ActiveViewport.ZoomBoundingBox(_mesh.GetBoundingBox(true));
         }
 
         private void tB_OperationInput_TextChanged(object sender, EventArgs e)
@@ -68,7 +89,7 @@ namespace ConwayPrototype.UI.Views
 
         private void ON_btn_OK_Clicked(object sender, EventArgs e)
         {
-            OperationResult = _operator.GetMesh();
+            OperationResult = cB_DrawVertexColors.Checked.Value ? _operator.GetMesh().ColorPolyhedron() : _operator.GetMesh();
             Close(DialogResult.Ok);
         }
 

@@ -111,9 +111,10 @@ namespace ConwayPrototype.UI.Views
 
         private void ON_btn_OK_Clicked(object sender, EventArgs e)
         {
-            OperationResult = _operator.GetMesh().ColorPolyhedron();
+            bool value = cB_DrawVertexColors.Checked.Value;
+            OperationResult = cB_DrawVertexColors.Checked.Value ? _operator.GetMesh().ColorPolyhedron() : _operator.GetMesh();
             ResultName =
-                $"{Tokenizer.Tokenize(tB_OperationInput.Text).ToName()}{Tokenizer.NameDelimiter}{cB_Seeds.SelectedValue.ToString()}";
+                $"{Tokenizer.Tokenize(tB_OperationInput.Text).ToName()}{Tokenizer.NameDelimiter}{cB_Seeds.SelectedValue}";
             Close(DialogResult.Ok);
         }
 

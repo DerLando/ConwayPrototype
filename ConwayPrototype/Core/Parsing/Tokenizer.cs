@@ -92,7 +92,7 @@ namespace ConwayPrototype.Core.Parsing
                 name += NameDelimiter;
             }
 
-            name = name.Remove(name.Length - 1);
+            if(name != "") name = name.Remove(name.Length - 1);
 
             return name;
         }

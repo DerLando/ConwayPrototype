@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using Eto.Forms;
 using Rhino;
 using Rhino.Geometry;
 
@@ -19,9 +21,88 @@ namespace ConwayPrototype.Core.Extensions
             return MeshFace.Unset;
         }
 
+        public static IEnumerable<Point3d> GetFaceVertices(this Mesh mesh, MeshFace face)
+        {
+            if (face.IsTriangle)
+            {
+                Point3d[] vertices = new Point3d[3];
+                vertices[0] = mesh.Vertices[face.A];
+                vertices[1] = mesh.Vertices[face.B];
+                vertices[2] = mesh.Vertices[face.C];
+
+                return vertices;
+            }
+            else
+            {
+                Point3d[] vertices = new Point3d[4];
+                vertices[0] = mesh.Vertices[face.A];
+                vertices[1] = mesh.Vertices[face.B];
+                vertices[2] = mesh.Vertices[face.C];
+                vertices[3] = mesh.Vertices[face.D];
+
+                return vertices;
+            }
+        }
+
+        /// <summary>
+        /// Closes a given polyline by adding the first point
+        /// of the polyline to the end
+        /// </summary>
+        /// <param name="pLine"></param>
+        /// <returns></returns>
+        public static bool Close(this Polyline pLine)
+        {
+            if(!pLine.IsClosed) pLine.Add(pLine[0]);
+            return pLine.IsClosed;
+        }
+
+        public static Polyline FaceBoundary(this Mesh mesh, MeshFace face)
+        {
+            var boundary = new Polyline(mesh.GetFaceVertices(face));
+            boundary.Close();
+            return boundary;
+        }
+
+        public static Polyline NgonBoundary(this Mesh mesh, MeshNgon nGon)
+        {
+            return new Polyline(from index in nGon.BoundaryVertexIndexList()
+                select new Point3d(mesh.Vertices[Convert.ToInt32(index)]));
+        }
+
         public static double Circumference(this Mesh mesh, MeshNgon nGon)
         {
-            return new Polyline(from index in nGon.BoundaryVertexIndexList() select new Point3d(mesh.Vertices[Convert.ToInt32(index)])).Length;
+            return mesh.NgonBoundary(nGon).Length;
+        }
+
+        public static Polyline[] ToWireFrame(this Mesh mesh)
+        {
+            // find all faces NOT in nGons
+            var faces = Enumerable.Range(0, mesh.Faces.Count).ToArray();
+
+            foreach (var meshNgon in mesh.Ngons)
+            {
+                foreach (var index in meshNgon.FaceIndexList())
+                {
+                    faces[Convert.ToInt32(index)] = -1;
+                }
+            }
+
+            faces = (from index in faces where index != -1 select index).ToArray();
+
+            // empty array for circumferences
+            var wireFrame = new Polyline[mesh.Ngons.Count + faces.Length];
+
+            for (int i = 0; i < faces.Length; i++)
+            {
+                wireFrame[i] = mesh.FaceBoundary(mesh.Faces[faces[i]]);
+            }
+
+            for (int i = 0; i < mesh.Ngons.Count; i++)
+            {
+                wireFrame[i + faces.Length] = mesh.NgonBoundary(mesh.Ngons[i]);
+            }
+
+            return wireFrame;
         }
 
         public static IEnumerable<Color> ColorRange(int count)

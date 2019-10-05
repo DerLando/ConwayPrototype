@@ -14,6 +14,7 @@ namespace ConwayPrototype.UI.Conduits
     {
         private Mesh _wireFrameMesh;
         private Mesh _mesh;
+        private Polyline[] _previewWireFrameMesh;
         private readonly Color _wireFrameColor;
         private readonly Color _color;
         private readonly DisplayMaterial _material;
@@ -24,6 +25,7 @@ namespace ConwayPrototype.UI.Conduits
         {
             _mesh = mesh.ColorPolyhedron();
             _wireFrameMesh = wireFrameMesh;
+            _previewWireFrameMesh = mesh.ToWireFrame();
             _wireFrameColor = Color.LightYellow;
             _color = Color.Red;
             _material = new DisplayMaterial(_color);
@@ -36,6 +38,7 @@ namespace ConwayPrototype.UI.Conduits
 
         public void SetDisplayMesh(Mesh mesh)
         {
+            _previewWireFrameMesh = mesh.ToWireFrame();
             _mesh = mesh.ColorPolyhedron();
         }
 
@@ -60,7 +63,14 @@ namespace ConwayPrototype.UI.Conduits
             base.PreDrawObject(e);
             var vp = e.Display.Viewport;
 
+            // draw wireframe of old (input) mesh
             e.Display.DrawMeshWires(_wireFrameMesh, _wireFrameColor);
+
+            // draw wireframe of new mes
+            for (int i = 0; i < _previewWireFrameMesh.Length; i++)
+            {
+                e.Display.DrawPolyline(_previewWireFrameMesh[i], _wireFrameColor);
+            }
 
             if (vp.DisplayMode.EnglishName.ToLower() == "wireframe")
             {
@@ -71,7 +81,7 @@ namespace ConwayPrototype.UI.Conduits
                 if(_shouldDrawVertexColors) e.Display.DrawMeshFalseColors(_mesh);
                 else e.Display.DrawMeshShaded(_mesh, _material);
 
-                e.Display.DrawMeshWires(_mesh, _wireFrameColor);
+                //e.Display.DrawMeshWires(_mesh, _wireFrameColor);
             }
 
         }

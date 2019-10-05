@@ -74,6 +74,9 @@ namespace ConwayPrototype.Core.Parsing
                 case Operation.zip:
                     _pMesh = _pMesh.Zip();
                     break;
+                case Operation.quinto:
+                    _pMesh = _pMesh.Quinto();
+                    break;
                 case Operation.none:
                     break;
                 default:

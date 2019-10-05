@@ -72,7 +72,7 @@ namespace ConwayPrototype.Core.Extensions
             // combine identical vertices,
             // this is necessary because we added vertices by face
             // ugly hack :(
-            lMesh = lMesh.ToRhinoMeshWithNgons().ToPlanktonMeshWithNgons();
+            lMesh = lMesh.CombineIdenticalVertices();
 
             return lMesh;
         }

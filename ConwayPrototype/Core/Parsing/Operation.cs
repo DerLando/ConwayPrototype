@@ -25,6 +25,7 @@ namespace ConwayPrototype.Core.Parsing
         loft,
         needle,
         zip,
+        quinto,
         none,
 
     }

@@ -9,7 +9,7 @@ namespace ConwayPrototype.Core.Parsing
 {
     public static class Tokenizer
     {
-        public static string PossibleTokens = "kadbejlmnotz";
+        public static string PossibleTokens = "kadbejlmnotzq";
         public static string NameDelimiter = "-";
 
         private static bool IsToken(char c)
@@ -50,6 +50,8 @@ namespace ConwayPrototype.Core.Parsing
                     return Operation.truncate;
                 case 'z':
                     return Operation.zip;
+                case 'q':
+                    return Operation.quinto;
                 default:
                     return Operation.none;
             }

@@ -94,6 +94,13 @@ namespace ConwayPrototype.Core.Extensions
             return pMesh;
         }
 
+        public static PlanktonMesh CombineIdenticalVertices(this PlanktonMesh pMesh)
+        {
+            // ugly hack for now
+            // TODO: Replace this with a real method
+            return pMesh.ToRhinoMeshWithNgons().ToPlanktonMeshWithNgons();
+        }
+
         public static Point3d ToPoint3d(this PlanktonXYZ pPt)
         {
             return new Point3d(pPt.X, pPt.Y, pPt.Z);

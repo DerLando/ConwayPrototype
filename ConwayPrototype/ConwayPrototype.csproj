@@ -79,6 +79,7 @@
     <Compile Include="Core\Extensions\NeedleOperation.cs" />
     <Compile Include="Core\Extensions\OrthoOperation.cs" />
     <Compile Include="Core\Extensions\Plankton.cs" />
+    <Compile Include="Core\Extensions\QuintoOperation.cs" />
     <Compile Include="Core\Extensions\TruncateOperation.cs" />
     <Compile Include="Core\Extensions\ZipOperation.cs" />
     <Compile Include="Core\Geometry\PlatonicSolids\Cube.cs" />

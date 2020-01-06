@@ -20,7 +20,7 @@ namespace ConwayPrototype.Core.Parsing
         truncate,
         join,
         split,
-        propellor,
+        propeller,
         flatten,
         loft,
         needle,

@@ -61,7 +61,8 @@ namespace ConwayPrototype.Core.Parsing
                     break;
                 case Operation.split:
                     break;
-                case Operation.propellor:
+                case Operation.propeller:
+                    _pMesh = _pMesh.Propeller();
                     break;
                 case Operation.flatten:
                     break;

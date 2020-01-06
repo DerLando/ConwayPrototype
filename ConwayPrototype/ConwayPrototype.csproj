@@ -61,7 +61,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ConwayMarkMeshTopology.cs" />
     <Compile Include="Commands\ConwayPrototypeCommand.cs" />
+    <Compile Include="Commands\ConwayRemoveTriangles.cs" />
     <Compile Include="Commands\ConwayTestCreate.cs" />
     <Compile Include="Commands\ConwayTestOperator.cs" />
     <Compile Include="Commands\ConwayTestSeed.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Core\Extensions\NeedleOperation.cs" />
     <Compile Include="Core\Extensions\OrthoOperation.cs" />
     <Compile Include="Core\Extensions\Plankton.cs" />
+    <Compile Include="Core\Extensions\PropellerOperation.cs" />
     <Compile Include="Core\Extensions\QuintoOperation.cs" />
     <Compile Include="Core\Extensions\TruncateOperation.cs" />
     <Compile Include="Core\Extensions\ZipOperation.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Core\Geometry\RegularTilings\Square.cs" />
     <Compile Include="Core\Geometry\RegularTilings\TilingBase.cs" />
     <Compile Include="Core\Geometry\Seed.cs" />
+    <Compile Include="Core\MeshWorker.cs" />
     <Compile Include="Core\Parsing\Creator.cs" />
     <Compile Include="Core\Parsing\Operation.cs" />
     <Compile Include="Core\Parsing\Operator.cs" />
